@@ -31,7 +31,8 @@ export default class Store {
             const response = await AuthService.login(email, password);
             console.log(response);
             
-            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
             this.setUser(response.data.user);
         } catch (e) {
@@ -42,7 +43,8 @@ export default class Store {
     async signUp(email: string, password: string) {
         try {
             const response = await AuthService.signup(email, password);
-            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
             this.setUser(response.data.user);
         } catch (e) {
@@ -52,8 +54,10 @@ export default class Store {
 
     async logout() {
         try {
-            await AuthService.logout();
-            localStorage.removeItem('token');
+            const refreshToken = localStorage.getItem('refreshToken');
+            await AuthService.logout(refreshToken);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
             this.setLoggedIn(false);
             this.setUser({} as IUser);
         } catch (e) {
@@ -64,9 +68,11 @@ export default class Store {
     async checkAuth() {
         this.setLoading(true);
         try {
-            const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true});
+            const refreshToken = localStorage.getItem('refreshToken');
+            const response = await axios.post<AuthResponse>(`${API_URL}/refresh`, {refreshToken: refreshToken});
             console.log(response);
-            localStorage.setItem('token', response.data.accessToken);
+            localStorage.setItem('accessToken', response.data.accessToken);
+            localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
             this.setUser(response.data.user);
         } catch (e) {

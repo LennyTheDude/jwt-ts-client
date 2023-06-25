@@ -10,7 +10,7 @@ const App: FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (localStorage.getItem('accessToken')) {
             store.checkAuth()
         }
     }, [store])
