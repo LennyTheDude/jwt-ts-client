@@ -69,7 +69,7 @@ export default class Store {
         this.setLoading(true);
         try {
             const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.post<AuthResponse>(`${API_URL}/refresh`, {refreshToken: refreshToken});
+            const response = await axios.post<AuthResponse>(`${API_URL}/auth/refresh`, {refreshToken: refreshToken});
             console.log(response);
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
