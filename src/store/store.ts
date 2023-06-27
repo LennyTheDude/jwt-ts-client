@@ -1,11 +1,11 @@
 import axios from "axios";
 import { makeAutoObservable } from "mobx";
 import { IUser } from "../models/IUser";
-import { AuthResponse } from "../models/response/AuthResponse";
+import { IAuthResponse } from "../models/IAuthResponse";
 import AuthService from "../services/AuthService";
 import { API_URL } from './../http/index';
 
-export default class Store {
+export default class AuthStore {
     user = {} as IUser;
     loggedIn = false;
     isLoading = false;
@@ -69,7 +69,7 @@ export default class Store {
         this.setLoading(true);
         try {
             const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.post<AuthResponse>(`${API_URL}/auth/refresh`, {refreshToken: refreshToken});
+            const response = await axios.post<IAuthResponse>(`${API_URL}/auth/refresh`, {refreshToken: refreshToken});
             console.log(response);
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);

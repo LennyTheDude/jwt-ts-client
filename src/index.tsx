@@ -1,15 +1,12 @@
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import Store from './store/store';
+import AuthStore from './store/store';
+import { IState } from './models/IState';
 
-interface State {
-    store: Store,
-}
+const store = new AuthStore();
 
-const store = new Store();
-
-export const Context = createContext<State>({
+export const Context = createContext<IState>({
     store,
 })
 
