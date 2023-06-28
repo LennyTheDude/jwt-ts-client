@@ -1,5 +1,5 @@
-import AuthStore from "../store/store";
+import AuthStore from '../store/store';
 
 export interface IState {
-    store: AuthStore,
+    store: AuthStore;
 }

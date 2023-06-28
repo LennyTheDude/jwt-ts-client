@@ -4,11 +4,11 @@ import { IAuthResponse } from '../models/IAuthResponse';
 
 export default class AuthService {
     static async login(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-        return $api.post<IAuthResponse>('/auth/login', {email, password});
+        return $api.post<IAuthResponse>('/auth/login', { email, password });
     }
 
     static async signup(email: string, password: string): Promise<AxiosResponse<IAuthResponse>> {
-        return $api.post<IAuthResponse>('/auth/signup', {email, password});
+        return $api.post<IAuthResponse>('/auth/signup', { email, password });
     }
 
     static async logout(refreshToken: string | null): Promise<AxiosResponse<IAuthResponse>> {

@@ -7,13 +7,13 @@ import { IState } from './models/IState';
 const store = new AuthStore();
 
 export const Context = createContext<IState>({
-    store,
-})
+    store
+});
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(
-    <Context.Provider value={{store}} >
+    <Context.Provider value={{ store }}>
         <App />
     </Context.Provider>
 );

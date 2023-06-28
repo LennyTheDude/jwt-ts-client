@@ -1,8 +1,8 @@
-import axios from "axios";
-import { makeAutoObservable } from "mobx";
-import { IUser } from "../models/IUser";
-import { IAuthResponse } from "../models/IAuthResponse";
-import AuthService from "../services/AuthService";
+import axios from 'axios';
+import { makeAutoObservable } from 'mobx';
+import { IUser } from '../models/IUser';
+import { IAuthResponse } from '../models/IAuthResponse';
+import AuthService from '../services/AuthService';
 import { API_URL } from './../config/env';
 
 export default class AuthStore {
@@ -30,7 +30,7 @@ export default class AuthStore {
         try {
             const response = await AuthService.login(email, password);
             console.log(response);
-            
+
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
@@ -64,12 +64,12 @@ export default class AuthStore {
             console.log(e);
         }
     }
-    
+
     async checkAuth() {
         this.setLoading(true);
         try {
             const refreshToken = localStorage.getItem('refreshToken');
-            const response = await axios.post<IAuthResponse>(`${API_URL}/auth/refresh`, {refreshToken: refreshToken});
+            const response = await axios.post<IAuthResponse>(`${API_URL}/auth/refresh`, { refreshToken: refreshToken });
             console.log(response);
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
