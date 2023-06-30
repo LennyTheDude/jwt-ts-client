@@ -25,10 +25,20 @@ const LoginPage: FC<IPage> = (props) => {
     };
 
     return (
-        <AuthContainer header="login">
-            <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <input type="password" placeholder="Password" value={pwd} onChange={(e) => setPwd(e.target.value)} />
-            <button onClick={handleSubmit}>Log In</button>
+        <AuthContainer header="Log in">
+            <div className="auth-form">
+                <div className="form-input-container">
+                    <label htmlFor="email">Email</label>
+                    <input name="email" type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="form-input-container">
+                    <label htmlFor="password">Password</label>
+                    <input name="password" type="password" placeholder="Password" value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                </div>
+                <button className="btn" onClick={handleSubmit}>
+                    Log In
+                </button>
+            </div>
             <small>
                 <p className="m-1 text-center">
                     Don&apos;t have an account?{' '}

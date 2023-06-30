@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { createRoot } from 'react-dom/client';
+import './index.css';
 import App from './App';
 import AuthStore from './store/store';
 import { IState } from './models/IState';

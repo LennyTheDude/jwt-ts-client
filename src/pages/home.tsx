@@ -1,4 +1,4 @@
-import { useState, useContext, FC } from 'react';
+import { useState, useContext, FC, useEffect } from 'react';
 import { Context } from '..';
 import { IUser } from '../models/IUser';
 import UserService from '../services/UserService';
@@ -8,6 +8,11 @@ const HomePage: FC = () => {
     const { store } = useContext(Context);
     const [users, setUsers] = useState<IUser[]>([]);
     const navigate = useNavigate();
+    useEffect(() => {
+        if (!store.loggedIn) {
+            navigate('/login');
+        }
+    }, [store]);
 
     const getUsers = async () => {
         try {
@@ -27,10 +32,14 @@ const HomePage: FC = () => {
         <div className="App">
             <h1>{`You are authorized as ${store.user.email}.`}</h1>
             <h2>{store.user.isActivated ? `Your account has been activated.` : 'Please activate your account.'}</h2>
-            <button onClick={logout}>Log Out</button>
-            <div>
-                <button onClick={() => getUsers()}>Get Users List</button>
-            </div>
+            <button className="btn" onClick={logout}>
+                Log Out
+            </button>
+            <br />
+            <br />
+            <button className="btn" onClick={() => getUsers()}>
+                Get Users List
+            </button>
             {users.map((user) => (
                 <div key={user.email}>{user.email}</div>
             ))}

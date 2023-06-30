@@ -11,8 +11,10 @@ const AuthContainer: FC<IAuthContainerProps> = (props) => {
     return (
         <div className="auth">
             <div className="auth-container">
-                <div className="auth-header">{header}</div>
-                <div className="auth-form">{children}</div>
+                <div className="auth-header">
+                    <h2>{header}</h2>
+                </div>
+                <div className="auth-form-container">{children}</div>
             </div>
         </div>
     );

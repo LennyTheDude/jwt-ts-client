@@ -3,6 +3,7 @@ import { useContext, FC, useEffect } from 'react';
 import { Context } from '.';
 import { Route, Routes } from 'react-router-dom';
 import routes from './config/routes';
+import PageLayout from './components/PageLayout';
 
 const App: FC = () => {
     const { store } = useContext(Context);
@@ -24,9 +25,11 @@ const App: FC = () => {
         <div>
             <Context.Provider value={{ store }}>
                 <Routes>
-                    {routes.map((route, index) => {
-                        return <Route key={index} path={route.path} Component={route.component} />;
-                    })}
+                    <Route element={<PageLayout />}>
+                        {routes.map((route, index) => {
+                            return <Route key={index} path={route.path} Component={route.component} />;
+                        })}
+                    </Route>
                 </Routes>
             </Context.Provider>
         </div>
