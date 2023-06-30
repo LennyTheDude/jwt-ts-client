@@ -1,28 +1,16 @@
 import { observer } from 'mobx-react-lite';
-import { useState, useEffect, useContext, FC } from 'react';
+import { useContext, FC, useEffect } from 'react';
 import { Context } from '.';
-import LoginForm from './components/LoginForm';
-import { IUser } from './models/IUser';
-import UserService from './services/UserService';
+import { Route, Routes } from 'react-router-dom';
+import routes from './config/routes';
 
 const App: FC = () => {
     const { store } = useContext(Context);
-    const [users, setUsers] = useState<IUser[]>([]);
-
     useEffect(() => {
         if (localStorage.getItem('accessToken')) {
             store.checkAuth();
         }
     }, [store]);
-
-    const getUsers = async () => {
-        try {
-            const response = await UserService.getUsers();
-            setUsers(response.data);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     if (store.isLoading) {
         return (
@@ -32,21 +20,15 @@ const App: FC = () => {
         );
     }
 
-    if (!store.loggedIn) {
-        return <LoginForm />;
-    }
-
     return (
-        <div className="App">
-            <h1>{`You are authorized as ${store.user.email}.`}</h1>
-            <h2>{store.user.isActivated ? `Your account has been activated.` : 'Please activate your account.'}</h2>
-            <button onClick={() => store.logout()}>Log Out</button>
-            <div>
-                <button onClick={() => getUsers()}>Get Users List</button>
-            </div>
-            {users.map((user) => (
-                <div key={user.email}>{user.email}</div>
-            ))}
+        <div>
+            <Context.Provider value={{ store }}>
+                <Routes>
+                    {routes.map((route, index) => {
+                        return <Route key={index} path={route.path} Component={route.component} />;
+                    })}
+                </Routes>
+            </Context.Provider>
         </div>
     );
 };

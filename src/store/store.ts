@@ -29,14 +29,14 @@ export default class AuthStore {
     async login(email: string, password: string) {
         try {
             const response = await AuthService.login(email, password);
-            console.log(response);
-
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
             this.setUser(response.data.user);
+            return true;
         } catch (e) {
             console.log(e);
+            return false;
         }
     }
 
@@ -70,7 +70,6 @@ export default class AuthStore {
         try {
             const refreshToken = localStorage.getItem('refreshToken');
             const response = await axios.post<IAuthResponse>(`${API_URL}/auth/refresh`, { refreshToken: refreshToken });
-            console.log(response);
             localStorage.setItem('accessToken', response.data.accessToken);
             localStorage.setItem('refreshToken', response.data.refreshToken);
             this.setLoggedIn(true);
