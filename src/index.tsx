@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
-import AuthStore from './store/store';
+import AuthStore from './store/AuthStore';
 import { IState } from './models/IState';
 import { BrowserRouter } from 'react-router-dom';
 
