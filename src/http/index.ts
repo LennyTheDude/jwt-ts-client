@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { IAuthResponse } from '../models/IAuthResponse';
 import { API_URL } from '../config/env';
+import { redirect } from 'react-router-dom';
 
 export const $api = axios.create({
     withCredentials: true,
@@ -27,7 +28,9 @@ $api.interceptors.response.use(
                 localStorage.setItem('refreshToken', response.data.refreshToken);
                 return $api.request(originalRequest);
             } catch (e) {
-                console.log('Unauthorized');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                redirect('/login');
             }
         }
         throw error;

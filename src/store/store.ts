@@ -4,6 +4,7 @@ import { IUser } from '../models/IUser';
 import { IAuthResponse } from '../models/IAuthResponse';
 import AuthService from '../services/AuthService';
 import { API_URL } from './../config/env';
+import { redirect } from 'react-router-dom';
 
 export default class AuthStore {
     user = {} as IUser;
@@ -75,7 +76,9 @@ export default class AuthStore {
             this.setLoggedIn(true);
             this.setUser(response.data.user);
         } catch (e) {
-            console.log(e);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            return redirect('/login');
         } finally {
             this.setLoading(false);
         }
