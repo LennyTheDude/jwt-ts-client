@@ -97,6 +97,10 @@ code {
     gap: 5px;
 }
 
+.form-error-msg {
+    color: red;
+}
+
 .btn {
     width: 100px;
     padding: 5px 0;
@@ -112,4 +116,14 @@ code {
     /* color: wheat; */
     transition: all 0.4s;
     cursor: pointer;
+}
+.btn:disabled {
+    opacity: 0.4;
+    transition: all 0.4s;
+}
+
+.btn:disabled:hover {
+    background-color: royalblue;
+    border-color: royalblue;
+    cursor: not-allowed;
 }
