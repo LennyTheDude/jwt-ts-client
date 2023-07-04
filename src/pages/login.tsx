@@ -3,15 +3,11 @@ import IPage from '../models/IPage';
 import AuthContainer from '../components/AuthContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '..';
+import { useInput } from '../hooks/useInput';
 
 const LoginPage: FC<IPage> = (props) => {
-    const [email, setEmail] = useState<string>('');
-    const [pwd, setPwd] = useState<string>('');
-    const [emailError, setEmailError] = useState<string>("Email can't be empty!");
-    const [pwdError, setPwdError] = useState<string>("Password can't be empty!");
-    const [emailDirty, setEmailDirty] = useState<boolean>(false);
-    const [pwdDirty, setPwdDirty] = useState<boolean>(false);
-    const [formValid, setFormValid] = useState<boolean>(false);
+    const email = useInput('Email', '', { isEmpty: true, minLength: 3, isEmail: true });
+    const pwd = useInput('Password', '', { isEmpty: true, minLength: 5, maxLength: 24 });
     const { store } = useContext(Context);
     const navigate = useNavigate();
 
@@ -21,51 +17,12 @@ const LoginPage: FC<IPage> = (props) => {
         }
     }, [store]);
 
-    useEffect(() => {
-        if (emailError || pwdError) {
-            setFormValid(false);
-        } else {
-            setFormValid(true);
-        }
-    }, [emailError, pwdError]);
-
     const handleSubmit = async () => {
-        await store.login(email, pwd);
+        await store.login(email.value, pwd.value);
 
         if (store.loggedIn) {
             navigate('/');
         }
-    };
-
-    const handleChange = (e: React.SyntheticEvent) => {
-        const target = e.target as HTMLInputElement;
-        if (target.name === 'email') {
-            setEmail(target.value);
-            const re = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
-            if (!re.test(String(target.value).toLowerCase())) {
-                setEmailError('Invalid email address!');
-            } else {
-                setEmailError('');
-            }
-        }
-        if (target.name === 'password') {
-            setPwd(target.value);
-            if (String(target.value).length < 4) {
-                setPwdError('Your password is too short!');
-            } else if (String(target.value).length > 24) {
-                setPwdError('Your password is too long!');
-            } else if (!target.value) {
-                setPwdError("Password can't be empty!");
-            } else {
-                setPwdError('');
-            }
-        }
-    };
-
-    const blurHandler = (e: React.SyntheticEvent) => {
-        const target = e.target as HTMLInputElement;
-        if (target.name === 'email') setEmailDirty(true);
-        if (target.name === 'password') setPwdDirty(true);
     };
 
     return (
@@ -73,15 +30,15 @@ const LoginPage: FC<IPage> = (props) => {
             <div className="auth-form">
                 <div className="form-input-container">
                     <label htmlFor="email">Email</label>
-                    <input onBlur={(e) => blurHandler(e)} name="email" type="text" placeholder="Email" value={email} onChange={(e) => handleChange(e)} />
-                    {emailDirty && emailError && <div className="form-error-msg">{emailError}</div>}
+                    <input onBlur={() => email.onBlur()} name="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
+                    {email.isDirty && email.errorMessage && <div className="form-error-msg">{email.errorMessage}</div>}
                 </div>
                 <div className="form-input-container">
                     <label htmlFor="password">Password</label>
-                    <input onBlur={(e) => blurHandler(e)} name="password" type="password" placeholder="Password" value={pwd} onChange={(e) => handleChange(e)} />
-                    {pwdDirty && pwdError && <div className="form-error-msg">{pwdError}</div>}
+                    <input onBlur={() => pwd.onBlur()} name="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
+                    {pwd.isDirty && pwd.errorMessage && <div className="form-error-msg">{pwd.errorMessage}</div>}
                 </div>
-                <button disabled={!formValid} className="btn" onClick={handleSubmit}>
+                <button disabled={!email.inputValid || !pwd.inputValid} className="btn" onClick={handleSubmit}>
                     Log In
                 </button>
             </div>
