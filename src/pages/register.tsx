@@ -1,12 +1,13 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import IPage from '../models/IPage';
 import AuthContainer from '../components/AuthContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '..';
+import { useInput } from '../hooks/useInput';
 
 const RegisterPage: FC<IPage> = (props) => {
-    const [email, setEmail] = useState<string>('');
-    const [pwd, setPwd] = useState<string>('');
+    const email = useInput('Email', '', { isEmpty: true, minLength: 3, isEmail: true });
+    const pwd = useInput('Password', '', { isEmpty: true, minLength: 5, maxLength: 24 });
     const { store } = useContext(Context);
     const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const RegisterPage: FC<IPage> = (props) => {
     }, [store]);
 
     const handleSubmit = async () => {
-        await store.signUp(email, pwd);
+        await store.signUp(email.value, pwd.value);
 
         if (store.loggedIn) {
             navigate('/');
@@ -29,13 +30,15 @@ const RegisterPage: FC<IPage> = (props) => {
             <div className="auth-form">
                 <div className="form-input-container">
                     <label htmlFor="email">Email</label>
-                    <input name="email" type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <input onBlur={(e) => email.onBlur()} name="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
+                    {email.isDirty && email.errorMessage && <div className="form-error-msg">{email.errorMessage}</div>}
                 </div>
                 <div className="form-input-container">
                     <label htmlFor="password">Password</label>
-                    <input name="password" type="password" placeholder="Password" value={pwd} onChange={(e) => setPwd(e.target.value)} />
+                    <input onBlur={(e) => pwd.onBlur()} name="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
+                    {pwd.isDirty && pwd.errorMessage && <div className="form-error-msg">{pwd.errorMessage}</div>}
                 </div>
-                <button className="btn" onClick={handleSubmit}>
+                <button disabled={!email.inputValid || !pwd.inputValid} className="btn" onClick={handleSubmit}>
                     Sign Up
                 </button>
             </div>
