@@ -1,5 +1,5 @@
 import React from 'react';
-import IPage from '../models/IPage';
+import IPage from '../interfaces/IPage';
 
 const AboutPage: React.FunctionComponent<IPage> = (props) => {
     return (

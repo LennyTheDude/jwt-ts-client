@@ -1,6 +1,6 @@
 import { useState, useContext, FC, useEffect } from 'react';
 import { Context } from '..';
-import { IUser } from '../models/IUser';
+import { IUser } from '../interfaces/IUser';
 import UserService from '../services/UserService';
 import { useNavigate } from 'react-router-dom';
 

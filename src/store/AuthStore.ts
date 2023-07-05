@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { makeAutoObservable } from 'mobx';
-import { IUser } from '../models/IUser';
-import { IAuthResponse } from '../models/IAuthResponse';
+import { IUser } from '../interfaces/IUser';
+import { IAuthResponse } from '../interfaces/IAuthResponse';
 import AuthService from '../services/AuthService';
 import { API_URL } from '../config/env';
 import { redirect } from 'react-router-dom';

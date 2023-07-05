@@ -1,5 +1,5 @@
 import { FC, useContext, useEffect } from 'react';
-import IPage from '../models/IPage';
+import IPage from '../interfaces/IPage';
 import AuthContainer from '../components/AuthContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '..';

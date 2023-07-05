@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IAuthResponse } from '../models/IAuthResponse';
+import { IAuthResponse } from '../interfaces/IAuthResponse';
 import { API_URL } from '../config/env';
 import { redirect } from 'react-router-dom';
 

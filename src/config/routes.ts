@@ -1,4 +1,4 @@
-import IRoute from '../models/IRoute';
+import IRoute from '../interfaces/IRoute';
 import AboutPage from '../pages/about';
 import HomePage from '../pages/home';
 import LoginPage from '../pages/login';
