@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import IInputValidations from '../interfaces/IInputValidations';
 
-export default (name: string, value: string, validations: any) => {
+export default (name: string, value: string, validations: IInputValidations) => {
     const [isEmptyError, setIsEmptyError] = useState<boolean>(true);
     const [isEmailError, setIsEmailError] = useState<boolean>(false);
     const [minLengthError, setMinLengthError] = useState<boolean>(false);
@@ -15,10 +16,16 @@ export default (name: string, value: string, validations: any) => {
                     setIsEmptyError(value ? false : true);
                     break;
                 case 'minLength':
-                    setMinLengthError(value.length < validations[validation] ? true : false);
+                    if (validations?.minLength) {
+                        // conditional here to avoid TS error "Object is possibly 'undefined'"
+                        setMinLengthError(value.length < validations?.minLength ? true : false);
+                    }
                     break;
                 case 'maxLength':
-                    setMaxLengthError(value.length > validations[validation] ? true : false);
+                    if (validations?.maxLength) {
+                        // conditional here to avoid TS error "Object is possibly 'undefined'"
+                        setMaxLengthError(value.length > validations?.maxLength ? true : false);
+                    }
                     break;
                 case 'isEmail':
                     const re = /^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm; // eslint-disable-line no-case-declarations

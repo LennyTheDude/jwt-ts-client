@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import useValidation from './useValidation';
+import IInputValidations from '../interfaces/IInputValidations';
 
-export const useInput = (name: string, initialValue: string, validations: any) => {
+export const useInput = (name: string, initialValue: string, validations: IInputValidations) => {
     const [value, setValue] = useState<string>(initialValue);
     const [isDirty, setIsDirty] = useState<boolean>(false);
     const valid = useValidation(name, value, validations);

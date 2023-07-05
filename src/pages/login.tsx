@@ -1,11 +1,11 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect } from 'react';
 import IPage from '../interfaces/IPage';
 import AuthContainer from '../components/AuthContainer';
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '..';
 import { useInput } from '../hooks/useInput';
 
-const LoginPage: FC<IPage> = (props) => {
+const LoginPage: FC<IPage> = () => {
     const email = useInput('Email', '', { isEmpty: true, minLength: 3, isEmail: true });
     const pwd = useInput('Password', '', { isEmpty: true, minLength: 5, maxLength: 24 });
     const { store } = useContext(Context);

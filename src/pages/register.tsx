@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '..';
 import { useInput } from '../hooks/useInput';
 
-const RegisterPage: FC<IPage> = (props) => {
+const RegisterPage: FC<IPage> = () => {
     const email = useInput('Email', '', { isEmpty: true, minLength: 3, isEmail: true });
     const pwd = useInput('Password', '', { isEmpty: true, minLength: 5, maxLength: 24 });
     const { store } = useContext(Context);
@@ -30,12 +30,12 @@ const RegisterPage: FC<IPage> = (props) => {
             <div className="auth-form">
                 <div className="form-input-container">
                     <label htmlFor="email">Email</label>
-                    <input onBlur={(e) => email.onBlur()} name="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
+                    <input onBlur={() => email.onBlur()} name="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
                     {email.isDirty && email.errorMessage && <div className="form-error-msg">{email.errorMessage}</div>}
                 </div>
                 <div className="form-input-container">
                     <label htmlFor="password">Password</label>
-                    <input onBlur={(e) => pwd.onBlur()} name="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
+                    <input onBlur={() => pwd.onBlur()} name="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
                     {pwd.isDirty && pwd.errorMessage && <div className="form-error-msg">{pwd.errorMessage}</div>}
                 </div>
                 <button disabled={!email.inputValid || !pwd.inputValid} className="btn" onClick={handleSubmit}>
