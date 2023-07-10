@@ -9,8 +9,12 @@ This project was bootstrapped with **[create-react-app](https://github.com/faceb
 
 ### Setting up the project locally
 
-- ####`npm ci`
+- `npm ci`
 
-- ####`cp .env.example .env`
+- `cp .env.example .env`
 
-- ####`npm start`
+- `npm start`
+
+Or, using Docker:
+
+- `docker-compose up -d`
