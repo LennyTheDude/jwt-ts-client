@@ -12,10 +12,14 @@ export const Context = createContext<IState>({
     store
 });
 
-const container = document.getElementById('root') as HTMLElement;
-const root = createRoot(container!);
-root.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
-);
+
+
+window.addEventListener("DOMContentLoaded", function () {
+    const container = document.getElementById('root') as HTMLElement;
+    const root = createRoot(container);
+    root.render(
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    );
+});

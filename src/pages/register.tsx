@@ -30,15 +30,15 @@ const RegisterPage: FC<IPage> = () => {
             <div className="auth-form">
                 <div className="form-input-container">
                     <label htmlFor="email">Email</label>
-                    <input onBlur={() => email.onBlur()} name="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
-                    {email.isDirty && email.errorMessage && <div className="form-error-msg">{email.errorMessage}</div>}
+                    <input onBlur={() => email.onBlur()} name="email" id="email" type="text" placeholder="Email" value={email.value} onChange={(e) => email.onChange(e)} />
+                    {email.isDirty && email.errorMessage && <div className="form-error-msg" role="email-error">{email.errorMessage}</div>}
                 </div>
                 <div className="form-input-container">
                     <label htmlFor="password">Password</label>
-                    <input onBlur={() => pwd.onBlur()} name="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
-                    {pwd.isDirty && pwd.errorMessage && <div className="form-error-msg">{pwd.errorMessage}</div>}
+                    <input onBlur={() => pwd.onBlur()} name="password" id="password" type="password" placeholder="Password" value={pwd.value} onChange={(e) => pwd.onChange(e)} />
+                    {pwd.isDirty && pwd.errorMessage && <div className="form-error-msg" role="pwd-error">{pwd.errorMessage}</div>}
                 </div>
-                <button disabled={!email.inputValid || !pwd.inputValid} className="btn" onClick={handleSubmit}>
+                <button disabled={!email.inputValid || !pwd.inputValid} className="btn" role="submit-btn" onClick={handleSubmit}>
                     Sign Up
                 </button>
             </div>
